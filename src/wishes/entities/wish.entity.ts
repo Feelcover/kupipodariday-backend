@@ -1,6 +1,7 @@
-import { IsUrl, Length } from "class-validator";
+import { IsInt, IsUrl, Length } from "class-validator";
+import { User } from "src/users/entities/user.entity";
 import { MainEntity } from "src/utils/MainEntity.entity";
-import { Column, Entity } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 
 
 @Entity()
@@ -15,4 +16,15 @@ export class Wish extends MainEntity {
     @Column()
     @IsUrl()
     image: string;
+
+    @Column()
+    @IsInt()
+    price: number;
+
+    @Column({default:0})
+    @IsInt()
+    raised:number;
+
+    @ManyToOne(()=> User, (owner) => owner.wishes)
+    owner: User;
 }
