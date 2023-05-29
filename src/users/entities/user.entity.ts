@@ -1,4 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
+import { Wish } from 'src/wishes/entities/wish.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { MainEntity } from '../../utils/MainEntity.entity';
 
@@ -22,7 +23,8 @@ export class User extends MainEntity {
     @Column()
     password: string;
 
-    @OneToMany() //Для Wish
+    @OneToMany(()=> Wish, (wish) =>wish.owner)
+    wishes:Wish[];
 
     @OneToMany() //Для Offer
 
