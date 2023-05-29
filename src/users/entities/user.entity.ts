@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { MainEntity } from '../../utils/MainEntity.entity';
 
 @Entity()
@@ -21,4 +21,10 @@ export class User extends MainEntity {
 
     @Column()
     password: string;
+
+    @OneToMany() //Для Wish
+
+    @OneToMany() //Для Offer
+
+    @OneToMany() //для Wishlist
 }
