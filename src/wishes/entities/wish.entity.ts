@@ -27,4 +27,13 @@ export class Wish extends MainEntity {
 
     @ManyToOne(()=> User, (owner) => owner.wishes)
     owner: User;
+
+    @Column()
+    @Length(1, 1024)
+    description: string;
+
+    @OneToMany()//Offer
+
+    @Column({default: 0})
+    copied:number;
 }
