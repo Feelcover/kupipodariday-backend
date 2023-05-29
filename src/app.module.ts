@@ -10,7 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'student',
       password: 'student',
       database: 'kupipodariday',
-      entities: [],
+      entities: ["тут будут сущности базы"],
       synchronize: true,
     }),
   ],
