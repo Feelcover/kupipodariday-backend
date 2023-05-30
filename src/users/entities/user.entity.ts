@@ -1,4 +1,4 @@
-import { IsNotEmpty, Length } from 'class-validator';
+import { IsNotEmpty, IsUrl, Length } from 'class-validator';
 import { Wish } from 'src/wishes/entities/wish.entity';
 import { WishList } from 'src/wishlists/entities/wishlist.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
@@ -16,6 +16,7 @@ export class User extends MainEntity {
     about: string;
 
     @Column({default:"https://i.pravatar.cc/300"})
+    @IsUrl()
     avatar: string;
 
     @Column({unique: true})
