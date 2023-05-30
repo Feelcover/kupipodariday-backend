@@ -22,7 +22,7 @@ export class WishList extends MainEntity {
     @JoinTable()
     items: Wish[];
 
-    @ManyToOne(()=> User, (user) => user.wishlists)
+    @ManyToOne(()=> User, (user) => user.wishlist)
     owner:User;
 
     
