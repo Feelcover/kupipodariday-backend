@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsUrl, Length } from 'class-validator';
+import { Offer } from 'src/offers/entities/offer.entity';
 import { Wish } from 'src/wishes/entities/wish.entity';
 import { WishList } from 'src/wishlists/entities/wishlist.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
@@ -31,5 +32,6 @@ export class User extends MainEntity {
     @OneToMany(()=> WishList, (wishlist)=> wishlist.owner)
     wishlist:WishList[];
 
-    @OneToMany() //для Offer
+    @OneToMany(() => Offer, (offer) => offer.user)
+    offer: Offer[];
 }
