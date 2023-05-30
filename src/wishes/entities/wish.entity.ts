@@ -1,7 +1,8 @@
 import { IsInt, IsUrl, Length } from "class-validator";
+import { Offer } from "src/offers/entities/offer.entity";
 import { User } from "src/users/entities/user.entity";
 import { MainEntity } from "src/utils/MainEntity.entity";
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
 
 @Entity()
@@ -32,7 +33,8 @@ export class Wish extends MainEntity {
     @Length(1, 1024)
     description: string;
 
-    @OneToMany()//Offer
+    @OneToMany(()=> Offer, (offer) => offer.item)
+    offer: Offer;
 
     @Column({default: 0})
     copied:number;
