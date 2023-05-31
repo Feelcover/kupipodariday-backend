@@ -3,7 +3,7 @@ import { Offer } from 'src/offers/entities/offer.entity';
 import { Wish } from 'src/wishes/entities/wish.entity';
 import { WishList } from 'src/wishlists/entities/wishlist.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
-import { MainEntity } from '../../utils/MainEntity.entity';
+import { MainEntity } from '../../utils/MainEntity';
 
 @Entity()
 export class User extends MainEntity {

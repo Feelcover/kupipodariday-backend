@@ -8,4 +8,4 @@ import { Offer } from './entities/offer.entity';
   controllers: [],
   providers: [],
 })
-export class OfferModule {}
+export class OffersModule {}
