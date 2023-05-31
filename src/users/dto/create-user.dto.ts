@@ -22,7 +22,7 @@ export class CreateUserDto {
   about: string;
 
   @IsOptional()
-  @IsUrl({}, { message: 'Введите ссылку в поле "avatar"' })
+  @IsUrl({}, { message: 'Введите корректную ссылку' })
   avatar: string;
 
   @IsNotEmpty()
@@ -30,7 +30,6 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(4)
+  @MinLength(2)
   password: string;
 }

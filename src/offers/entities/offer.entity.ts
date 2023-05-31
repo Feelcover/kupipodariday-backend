@@ -11,7 +11,7 @@ export class Offer extends MainEntity {
   @ManyToOne(() => Wish, (wish) => wish.offers)
   item: Wish;
 
-  @Column()
+  @Column({ scale: 2 })
   amount: number;
 
   @Column({ default: false })
