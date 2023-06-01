@@ -1,4 +1,6 @@
+import { IsString } from 'class-validator';
+
 export class SearchUserDto {
-  email?: string;
-  username?: string;
+  @IsString()
+  query: string;
 }

@@ -30,6 +30,6 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @MinLength(2)
+  @MinLength(4, { message: 'Пароль должен быть длинной минимум 4 символа' })
   password: string;
 }
