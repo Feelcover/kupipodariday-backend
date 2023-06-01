@@ -23,13 +23,13 @@ export class User extends MainEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @OneToMany(() => Wish, (wish) => wish.owner)
   wishes: Wish[];
 
-  @OneToMany(() => WishList, (wishlist) => wishlist.owner)
+  @OneToMany(() => WishList, (wishlist) => wishlist.items)
   wishlists: WishList[];
 
   @OneToMany(() => Offer, (offer) => offer.user)

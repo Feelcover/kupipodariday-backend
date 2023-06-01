@@ -17,10 +17,9 @@ export class WishList extends MainEntity {
   @Column()
   image: string;
 
-  @ManyToMany(() => Wish, (wish) => wish.name)
-  @JoinTable()
+  @ManyToOne(() => Wish, (wish) => wish.image)
   items: Wish[];
 
-  @ManyToOne(() => User, (user) => user.wishlists)
+  @ManyToOne(() => User, (user) => user.offers)
   owner: User;
 }
