@@ -5,11 +5,11 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Offer extends MainEntity {
-  @ManyToOne(() => User, (user) => user.offers)
-  user: User;
-
   @ManyToOne(() => Wish, (wish) => wish.offers)
   item: Wish;
+  
+  @ManyToOne(() => User, (user) => user.offers)
+  user: User;
 
   @Column({ scale: 2 })
   amount: number;
