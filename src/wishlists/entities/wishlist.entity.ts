@@ -1,8 +1,8 @@
-import { Length } from 'class-validator';
+import { IsUrl, Length, MaxLength } from 'class-validator';
 import { User } from 'src/users/entities/user.entity';
 import { MainEntity } from 'src/utils/MainEntity';
 import { Wish } from 'src/wishes/entities/wish.entity';
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToOne } from 'typeorm';
 
 @Entity()
 export class WishList extends MainEntity {
@@ -11,15 +11,17 @@ export class WishList extends MainEntity {
   name: string;
 
   @Column()
-  @Length(0, 1500)
+  @MaxLength(1500)
   description: string;
 
   @Column()
+  @IsUrl()
   image: string;
 
   @ManyToOne(() => Wish, (wish) => wish.image)
+  @JoinTable()
   items: Wish[];
 
-  @ManyToOne(() => User, (user) => user.offers)
+  @ManyToOne(() => User, (user) => user.wishlists)
   owner: User;
 }
