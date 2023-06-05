@@ -1,6 +1,7 @@
 import { IsUrl, Length, MaxLength } from 'class-validator';
 import { User } from 'src/users/entities/user.entity';
 import { MainEntity } from 'src/utils/MainEntity';
+import { PartialWishDto } from 'src/wishes/dto/partial-wish.dto';
 import { Wish } from 'src/wishes/entities/wish.entity';
 import { Column, Entity, JoinTable, ManyToOne } from 'typeorm';
 
@@ -18,9 +19,9 @@ export class WishList extends MainEntity {
   @IsUrl()
   image: string;
 
-  @ManyToOne(() => Wish, (wish) => wish.image)
+  @ManyToOne(() => Wish)
   @JoinTable()
-  items: Wish[];
+  items: PartialWishDto[];
 
   @ManyToOne(() => User, (user) => user.wishlists)
   owner: User;
