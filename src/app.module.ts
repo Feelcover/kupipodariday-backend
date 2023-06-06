@@ -14,7 +14,7 @@ import { WishlistModule } from './wishlists/wishlists.module';
       username: 'student',
       password: 'student',
       database: 'kupipodariday',
-      entities: ["тут будут сущности базы"],
+      entities: ['тут будут сущности базы'],
       synchronize: true,
     }),
     UsersModule,
