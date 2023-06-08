@@ -25,6 +25,14 @@ export class WishesService {
     return this.wishesRepository.findOne(query);
   }
 
+  getLast() {
+    return this.findAll({ order: { createdAt: 'DESC' }, take: 40 });
+  }
+
+  getTop() {
+    return this.findAll({ order: { copied: 'DESC' }, take: 10 });
+  }
+
   create(createWishDto: CreateWishDto, ownerId: number) {
     const wish = this.wishesRepository.create({
       ...createWishDto,
