@@ -17,13 +17,19 @@ export class WishesService {
     private wishesRepository: Repository<Wish>,
   ) {}
 
-   findAll(query: FindManyOptions<Wish>) {
+  findAll(query: FindManyOptions<Wish>) {
     return this.wishesRepository.find(query);
   }
 
-   findOne(query: FindOneOptions<Wish>) {
+  findOne(query: FindOneOptions<Wish>) {
     return this.wishesRepository.findOne(query);
   }
 
-  async create(createWishDto: CreateWishDto, ownerId: number) {}
+  create(createWishDto: CreateWishDto, ownerId: number) {
+    const wish = this.wishesRepository.create({
+      ...createWishDto,
+      owner: { id: ownerId },
+    });
+    return this.wishesRepository.save(wish);
+  }
 }
