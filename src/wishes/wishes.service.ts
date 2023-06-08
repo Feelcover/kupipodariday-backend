@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   DataSource,
@@ -7,6 +7,7 @@ import {
   Repository,
 } from 'typeorm';
 import { CreateWishDto } from './dto/create-wish.dto';
+import { UpdateWishDto } from './dto/update-wish.dto';
 import { Wish } from './entities/wish.entity';
 
 @Injectable()
@@ -33,11 +34,33 @@ export class WishesService {
     return this.findAll({ order: { copied: 'DESC' }, take: 10 });
   }
 
+  getById(id: number) {
+    return this.findOne({ where: { id }, relations: { owner: true } });
+  }
+
   create(createWishDto: CreateWishDto, ownerId: number) {
     const wish = this.wishesRepository.create({
       ...createWishDto,
       owner: { id: ownerId },
     });
     return this.wishesRepository.save(wish);
+  }
+
+  async update(id: number, userId: number, updateWishDto: UpdateWishDto) {
+    const wish = await this.findOne({
+      where: { id },
+      relations: { owner: true },
+    });
+    if (userId !== wish.owner.id) {
+      throw new ForbiddenException(
+        'Вы можете редактировать только свои подарки',
+      );
+    }
+    if (updateWishDto.price && wish.raised > 0) {
+      throw new ForbiddenException(
+        'Нельзя менять стоимость подарка, уже есть желающие скинуться',
+      );
+    }
+    return this.wishesRepository.update(id, updateWishDto);
   }
 }
