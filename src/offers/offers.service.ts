@@ -42,13 +42,17 @@ export class OffersService {
       item: { id: itemId },
     });
 
-    await this.dataSource.transaction( async(transManager) => {
-        await transManager.insert<Offer>(Offer, offer);
-        await transManager.update<Wish>(Wish, itemId, {
-            raised: amount + raised,
-        });
-    })
-    return {}
+    await this.dataSource.transaction(async (transManager) => {
+      await transManager.insert<Offer>(Offer, offer);
+      await transManager.update<Wish>(Wish, itemId, {
+        raised: amount + raised,
+      });
+    });
+    return {};
+  }
+
+  findOne(query: FindManyOptions<Offer>) {
+    return this.offerRepository.findOne(query);
   }
 
   findAll(query: FindManyOptions<Offer>) {
