@@ -15,6 +15,33 @@ export class OffersService {
     private wishesService: WishesService,
   ) {}
 
+  findAll(query: FindManyOptions<Offer>) {
+    return this.offerRepository.find(query);
+  }
+
+  getAll() {
+    return this.findAll({
+      relations: {
+        item: { owner: true },
+        user: { wishes: true, offers: true },
+      },
+    });
+  }
+
+  findOne(query: FindManyOptions<Offer>) {
+    return this.offerRepository.findOne(query);
+  }
+
+  getOne(id: number) {
+    return this.findOne({
+      where: { id },
+      relations: {
+        item: { owner: true },
+        user: { wishes: true, offers: true },
+      },
+    });
+  }
+
   async create(createOfferDto: CreateOfferDto, userId: number) {
     const { amount, itemId } = createOfferDto;
     const wish = await this.wishesService.findOne({
@@ -49,32 +76,5 @@ export class OffersService {
       });
     });
     return {};
-  }
-
-  findAll(query: FindManyOptions<Offer>) {
-    return this.offerRepository.find(query);
-  }
-
-  getAll() {
-    return this.findAll({
-      relations: {
-        item: { owner: true },
-        user: { wishes: true, offers: true },
-      },
-    });
-  }
-
-  findOne(query: FindManyOptions<Offer>) {
-    return this.offerRepository.findOne(query);
-  }
-
-  getOne(id: number) {
-    return this.findOne({
-      where: { id },
-      relations: {
-        item: { owner: true },
-        user: { wishes: true, offers: true },
-      },
-    });
   }
 }
