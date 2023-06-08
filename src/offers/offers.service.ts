@@ -58,4 +58,13 @@ export class OffersService {
   findAll(query: FindManyOptions<Offer>) {
     return this.offerRepository.find(query);
   }
+
+  getAll() {
+    return this.findAll({
+      relations: {
+        item: { owner: true },
+        user: { wishes: true, offers: true },
+      },
+    });
+  }
 }
