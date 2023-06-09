@@ -22,6 +22,12 @@ export class UsersService {
     return this.userRepository.findOne(query);
   }
 
+  findByQuery(query: string) {
+    return this.findAll({
+      where: [{ username: query }, { email: query }],
+    });
+  }
+
   async create(createUserDto: CreateUserDto) {
     const { email, username, password } = createUserDto;
     const userEmail = await this.findOne({
@@ -81,5 +87,23 @@ export class UsersService {
     await this.userRepository.update(id, updateUser);
 
     return this.findOne({ where: { id } });
+  }
+
+  getByUsername(username: string) {
+    return this.findOne({ where: { username } });
+  }
+
+  getMyWishes(userId: number) {
+    return this.findOne({
+      where: { id: userId },
+      relations: { wishes: { owner: true } },
+    }).then((user) => user.wishes);
+  }
+
+  getUserWishes(username: string) {
+    return this.findOne({
+      where: { username },
+      relations: { wishes: true },
+    }).then((user) => user.wishes);
   }
 }
