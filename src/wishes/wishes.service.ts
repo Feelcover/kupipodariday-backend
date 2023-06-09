@@ -46,7 +46,7 @@ export class WishesService {
     return this.wishesRepository.save(wish);
   }
 
-  async update(id: number, userId: number, updateWishDto: UpdateWishDto) {
+  async updateOne(id: number, userId: number, updateWishDto: UpdateWishDto) {
     const wish = await this.findOne({
       where: { id },
       relations: { owner: true },
@@ -62,5 +62,18 @@ export class WishesService {
       );
     }
     return this.wishesRepository.update(id, updateWishDto);
+  }
+
+  async removeOne(id: number, userId: number) {
+    const wish = await this.findOne({
+      where: { id },
+      relations: { owner: true },
+    });
+    if (userId !== wish.owner.id) {
+      throw new ForbiddenException('Вы можете удалять только свои подарки');
+    }
+
+    this.wishesRepository.delete(id);
+    return wish;
   }
 }
