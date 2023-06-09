@@ -76,4 +76,36 @@ export class WishesService {
     this.wishesRepository.delete(id);
     return wish;
   }
+
+  async copy(wishId: number, userId: number) {
+    const wish = await this.findOne({
+      where: { id: wishId },
+    });
+    const { name, description, image, link, price, copied } = wish;
+
+    const findWish = !!(await this.findOne({
+      where: { name, link, price, owner: { id: userId } },
+      relations: { owner: true },
+    }));
+
+    if (findWish) {
+      throw new ForbiddenException('У вас уже имеется эта копия');
+    }
+
+    const wishCopy = {
+      name,
+      description,
+      image,
+      link,
+      price,
+      owner: { id: userId },
+    };
+
+    await this.dataSource.transaction(async (transManager) => {
+      await transManager.update<Wish>(Wish, wishId, { copied: copied + 1 });
+      await transManager.insert<Wish>(Wish, wishCopy);
+    });
+
+    return {};
+  }
 }
