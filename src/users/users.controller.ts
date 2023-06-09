@@ -4,11 +4,13 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { CustomRequest } from 'src/utils/CustomRequest';
+import { SearchUserDto } from './dto/search-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
@@ -43,5 +45,11 @@ export class UsersController {
     @Req() req: CustomRequest,
   ) {
     return this.usersService.updateOne(req.user.id, updateUserDto);
+  }
+
+  @Post('find')
+  findByUserNameOrEmail(@Body() searchUserDto: SearchUserDto) {
+    const { query } = searchUserDto;
+    return this.usersService.findByQuery(query);
   }
 }
