@@ -1,6 +1,15 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { CustomRequest } from 'src/utils/CustomRequest';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 @UseGuards(JwtGuard)
@@ -26,5 +35,13 @@ export class UsersController {
   @Get(':username/wishes')
   getUserWishes(@Param('username') username: string) {
     return this.usersService.getUserWishes(username);
+  }
+
+  @Patch('me')
+  async updateUser(
+    @Body() updateUserDto: UpdateUserDto,
+    @Req() req: CustomRequest,
+  ) {
+    return this.usersService.updateOne(req.user.id, updateUserDto);
   }
 }
