@@ -77,7 +77,7 @@ export class WishesService {
     return wish;
   }
 
-  async copy(wishId: number, userId: number) {
+  async copiedWish(wishId: number, userId: number) {
     const wish = await this.findOne({
       where: { id: wishId },
     });
