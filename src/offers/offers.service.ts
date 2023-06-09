@@ -15,11 +15,11 @@ export class OffersService {
     private wishesService: WishesService,
   ) {}
 
-  findAll(query: FindManyOptions<Offer>) {
+   findAll(query: FindManyOptions<Offer>) {
     return this.offerRepository.find(query);
   }
 
-  getAll() {
+   getAll() {
     return this.findAll({
       relations: {
         item: { owner: true },

@@ -1,5 +1,15 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { CustomRequest } from 'src/utils/CustomRequest';
+import { CreateWishDto } from './dto/create-wish.dto';
 import { WishesService } from './wishes.service';
 
 @Controller('wishes')
@@ -16,9 +26,15 @@ export class WishesController {
     return this.wishesService.getTop();
   }
 
-@UseGuards(JwtGuard)
-@Get(':id')
-getById(@Param('id') id: string) {
-return this.wishesService.getById(+id)
-}
+  @UseGuards(JwtGuard)
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.wishesService.getById(+id);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post()
+  create(@Body() CreateWishDto: CreateWishDto, @Req() req: CustomRequest) {
+    return this.wishesService.create(CreateWishDto, req.user.id);
+  }
 }
