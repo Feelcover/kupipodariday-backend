@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { HashService } from 'src/hash/hash.service';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -47,5 +48,38 @@ export class UsersService {
     });
 
     return this.userRepository.save(newUser);
+  }
+
+  async updateOne(id: number, updateUserDto: UpdateUserDto) {
+    const { email, username, password } = updateUserDto;
+    const user = await this.findOne({ where: { id } });
+
+    const emailInBase = !!(await this.findOne({
+      where: [{ email }],
+    }));
+
+    const userNameInBase = !!(await this.findOne({
+      where: [{ username }],
+    }));
+
+    if (emailInBase) {
+      throw new ConflictException(
+        'Пользователь с таким email уже зарегистрирован',
+      );
+    }
+    if (userNameInBase) {
+      throw new ConflictException(
+        'Пользователь с таким именем пользовтеля уже зарегистрирован',
+      );
+    }
+
+    if (password) {
+      updateUserDto.password = await this.hashService.generate(password);
+    }
+
+    const updateUser = { ...user, ...updateUserDto };
+    await this.userRepository.update(id, updateUser);
+
+    return this.findOne({ where: { id } });
   }
 }
