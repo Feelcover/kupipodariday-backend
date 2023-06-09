@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -49,4 +50,11 @@ export class WishesController {
   ) {
     return this.wishesService.updateOne(+id, req.user.id, updateWishDto);
   }
+
+  @UseGuards(JwtGuard)
+  @Delete(':id')
+  remove(@Param('id') id: string, @Req() req: CustomRequest) {
+    return this.wishesService.removeOne(+id, req.user.id);
+  }
+
 }
