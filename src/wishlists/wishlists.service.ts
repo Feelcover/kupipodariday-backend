@@ -21,4 +21,11 @@ export class WishlistService {
   getWishLists() {
     return this.findAll({ relations: ['items', 'owner'] });
   }
+
+  getById(id: number) {
+    return this.findOne({
+      where: { id },
+      relations: ['items', 'owner'],
+    });
+  }
 }
