@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -11,6 +12,7 @@ import {
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { CustomRequest } from 'src/utils/CustomRequest';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
+import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 import { WishlistService } from './wishlists.service';
 
 @UseGuards(JwtGuard)
@@ -39,5 +41,14 @@ export class WishlistsController {
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req: CustomRequest) {
     return this.wishListService.delete(+id, req.user.id);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateWishlistDto: UpdateWishlistDto,
+    @Req() req: CustomRequest,
+  ) {
+    return this.wishListService.update(+id, updateWishlistDto, req.user.id);
   }
 }
