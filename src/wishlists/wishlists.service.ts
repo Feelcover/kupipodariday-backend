@@ -31,7 +31,7 @@ export class WishlistService {
     });
   }
 
-  create(createWishListDto: CreateWishlistDto, ownerId) {
+  create(createWishListDto: CreateWishlistDto, ownerId: number) {
     const { itemsId, ...rest } = createWishListDto;
     const items = itemsId.map((id) => ({ id }));
     const wishList = this.wishlistRepository.create({
@@ -63,5 +63,20 @@ export class WishlistService {
     await this.wishlistRepository.update(id, updatedWishList);
 
     return this.findOne({ where: { id } });
+  }
+
+  async delete(id: number, userId: number) {
+    const wishList = await this.findOne({
+      where: { id },
+      relations: { owner: true },
+    });
+    if (wishList.owner.id !== userId) {
+      throw new ForbiddenException(
+        'Вы можете удалять только свои списки подарков',
+      );
+    }
+    await this.wishlistRepository.delete(id);
+
+    return wishList;
   }
 }
