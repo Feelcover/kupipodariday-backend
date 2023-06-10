@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -33,5 +34,10 @@ export class WishlistsController {
     @Req() req: CustomRequest,
   ) {
     return this.wishListService.create(createWishlistDto, req.user.id);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string, @Req() req: CustomRequest) {
+    return this.wishListService.delete(+id, req.user.id);
   }
 }
