@@ -4,6 +4,8 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtConfig } from "src/config/jwt-config.factory";
 import { HashModule } from "src/hash/hash.module";
 import { UsersModule } from "src/users/users.module";
+import { JwtStrategy } from "./strategies/jwt.strategy";
+import { LocalStrategy } from "./strategies/local.strategy";
 
 
 @Module({
@@ -15,7 +17,7 @@ import { UsersModule } from "src/users/users.module";
             useClass: JwtConfig
         })
     ],
-    providers:[],
-    controllers:[],
-    exports:[],
+    providers:[JwtConfig, "тут будет AuthService",LocalStrategy, JwtStrategy],
+    controllers:["а тут будет AuthController"],
+    exports:["тут тоже AuthService"],
 })
