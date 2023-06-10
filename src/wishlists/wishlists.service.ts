@@ -7,7 +7,7 @@ import { WishList } from './entities/wishlist.entity';
 export class WishlistService {
   constructor(
     @InjectRepository(WishList)
-    private wishlistRepository: Repository<WishList>
+    private wishlistRepository: Repository<WishList>,
   ) {}
 
   findAll(query: FindManyOptions<WishList>) {
@@ -18,4 +18,7 @@ export class WishlistService {
     return this.wishlistRepository.findOne(query);
   }
 
+  getWishLists() {
+    return this.findAll({ relations: ['items', 'owner'] });
+  }
 }
