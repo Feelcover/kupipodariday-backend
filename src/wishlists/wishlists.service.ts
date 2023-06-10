@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { WishList } from './entities/wishlist.entity';
 
 @Injectable()
@@ -9,4 +9,13 @@ export class WishlistService {
     @InjectRepository(WishList)
     private wishlistRepository: Repository<WishList>
   ) {}
+
+  findAll(query: FindManyOptions<WishList>) {
+    return this.wishlistRepository.find(query);
+  }
+
+  findOne(query: FindOneOptions<WishList>) {
+    return this.wishlistRepository.findOne(query);
+  }
+
 }
