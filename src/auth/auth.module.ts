@@ -19,7 +19,7 @@ import { LocalStrategy } from "./strategies/local.strategy";
             useClass: JwtConfig
         }),
     ],
-    providers:[JwtConfig, AuthService, LocalStrategy, JwtStrategy],
+    providers:[JwtConfig, AuthService, LocalStrategy, JwtStrategy ],
     controllers:[AuthController],
     exports:[AuthService],
 })
