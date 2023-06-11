@@ -1,5 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { plainToClass } from 'class-transformer';
 import { HashService } from 'src/hash/hash.service';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -92,7 +93,8 @@ export class UsersService {
   }
 
   getByUsername(username: string) {
-    return this.findOne({ where: { username } });
+    return this.findOne({ where: { username } })
+    .then((user) => plainToClass(User, user, { excludePrefixes: ['password'] }))
   }
 
   getMyWishes(userId: number) {

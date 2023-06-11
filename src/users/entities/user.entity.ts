@@ -32,7 +32,6 @@ export class User extends MainEntity {
   email: string;
 
   @Column()
-  @IsString()
   @Exclude()
   password: string;
 
