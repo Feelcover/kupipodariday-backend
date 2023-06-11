@@ -12,8 +12,8 @@ import { WishlistModule } from './wishlists/wishlists.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal:true, load: [configuration]}),
-    TypeOrmModule.forRootAsync({useClass: DatabaseFactory}),
+    ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+    TypeOrmModule.forRootAsync({ useClass: DatabaseFactory }),
     OffersModule,
     UsersModule,
     WishlistModule,

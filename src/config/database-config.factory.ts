@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
+import { Offer } from 'src/offers/entities/offer.entity';
+import { Wish } from 'src/wishes/entities/wish.entity';
+import { User } from 'src/users/entities/user.entity';
+import { WishList } from 'src/wishlists/entities/wishlist.entity';
 
 @Injectable()
 export class DatabaseFactory implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
-  createTypeOrmOptions(
-    connectionName?: string,
-  ): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
+  createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
     return {
       type: 'postgres',
       host: this.configService.get<string>('database.host'),
@@ -15,7 +17,7 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
       username: this.configService.get<string>('database.username'),
       password: this.configService.get<string>('database.password'),
       database: this.configService.get<string>('database.database'),
-      entities: [],
+      entities: [Offer, Wish, WishList, User],
       synchronize: true,
     };
   }
