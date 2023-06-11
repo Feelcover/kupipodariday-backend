@@ -2,6 +2,7 @@ import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { CustomRequest } from 'src/utils/CustomRequest';
+import { threadId } from 'worker_threads';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local-auth.guard';
 
@@ -21,5 +22,11 @@ export class AuthController {
   @Post('signup')
   async signup(@Body() createUserDto: CreateUserDto) {
     const { about, ...rest } = createUserDto;
+    const userDto = (about !== '' ? createUserDto : rest) as CreateUserDto;
+
+    const user = await this.userService.create(userDto);
+    this.authService.auth(user);
+
+    return user;
   }
 }
