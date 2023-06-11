@@ -18,7 +18,6 @@ export class DatabaseFactory implements TypeOrmOptionsFactory {
       password: this.configService.get<string>('database.password'),
       database: this.configService.get<string>('database.database'),
       entities: [Offer, Wish, WishList, User],
-      migrationsRun: true,
       synchronize: true,
     };
   }
