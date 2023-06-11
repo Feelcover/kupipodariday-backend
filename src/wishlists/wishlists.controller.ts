@@ -25,7 +25,7 @@ export class WishlistsController {
     return this.wishListService.getWishLists();
   }
 
-  @Get()
+  @Get(':id')
   getById(@Param('id') id: string) {
     return this.wishListService.getById(+id);
   }

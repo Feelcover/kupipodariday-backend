@@ -58,25 +58,27 @@ export class UsersService {
 
   async updateOne(id: number, updateUserDto: UpdateUserDto) {
     const { email, username, password } = updateUserDto;
+
     const user = await this.findOne({ where: { id } });
 
-    const emailInBase = !!(await this.findOne({
-      where: [{ email }],
-    }));
+    if (email) {
+      const emailInBase = await this.findOne({ where: { email } });
 
-    const userNameInBase = !!(await this.findOne({
-      where: [{ username }],
-    }));
-
-    if (emailInBase) {
-      throw new ConflictException(
-        'Пользователь с таким email уже зарегистрирован',
-      );
+      if (emailInBase && emailInBase.id !== id) {
+        throw new ConflictException(
+          'Пользователь с таким email уже зарегистрирован',
+        );
+      }
     }
-    if (userNameInBase) {
-      throw new ConflictException(
-        'Пользователь с таким именем пользовтеля уже зарегистрирован',
-      );
+
+    if (username) {
+      const userNameInBase = await this.findOne({ where: { username } });
+
+      if (userNameInBase && userNameInBase.id !== id) {
+        throw new ConflictException(
+          'Пользователь с таким именем пользователя уже зарегистрирован',
+        );
+      }
     }
 
     if (password) {

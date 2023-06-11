@@ -40,7 +40,7 @@ export class UsersController {
   }
 
   @Patch('me')
-  async updateUser(
+  updateUser(
     @Body() updateUserDto: UpdateUserDto,
     @Req() req: CustomRequest,
   ) {
