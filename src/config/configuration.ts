@@ -6,5 +6,5 @@ export default () => ({
     password: 'student',
     database: 'kupipodariday',
   },
-  jwtSecret: process.env.JWT_SECRET || 'jwt-secret',
+  secretKey: process.env.JWT_SECRET || 'secret-key',
 });

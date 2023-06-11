@@ -2,7 +2,6 @@ import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { CustomRequest } from 'src/utils/CustomRequest';
-import { threadId } from 'worker_threads';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local-auth.guard';
 
