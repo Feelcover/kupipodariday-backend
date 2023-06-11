@@ -31,7 +31,7 @@ export class User extends MainEntity {
   @IsString()
   email: string;
 
-  @Column({ select: false })
+  @Column()
   @IsString()
   @Exclude()
   password: string;
@@ -39,9 +39,9 @@ export class User extends MainEntity {
   @OneToMany(() => Wish, (wish) => wish.owner)
   wishes: Wish[];
 
-  @OneToMany(() => WishList, (wishlist) => wishlist.owner)
-  wishlists: WishList[];
-
   @OneToMany(() => Offer, (offer) => offer.user)
   offers: Offer[];
+
+  @OneToMany(() => WishList, (wishlist) => wishlist.owner)
+  wishlists: WishList[];
 }

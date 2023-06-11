@@ -7,8 +7,8 @@ import { UsersService } from 'src/users/users.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UsersService,
     private jwtService: JwtService,
+    private userService: UsersService,
     private hashService: HashService,
   ) {}
 
@@ -27,8 +27,9 @@ export class AuthService {
       const isVerify = await this.hashService.verify(password, user.password);
       if (isVerify) {
         return user;
+      } else {
+        return null;
       }
-      return null;
     }
   }
 }
