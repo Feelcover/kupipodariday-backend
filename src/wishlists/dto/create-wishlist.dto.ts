@@ -14,7 +14,9 @@ export class CreateWishlistDto {
   @IsString()
   name: string;
 
-  @MaxLength(1500, { message: 'Максимальная длина не должна превышать 1500 символов' })
+  @MaxLength(1500, {
+    message: 'Максимальная длина не должна превышать 1500 символов',
+  })
   @IsString()
   @IsOptional()
   description: string;

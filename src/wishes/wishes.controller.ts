@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { CustomRequest } from 'src/utils/CustomRequest';
-import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
 import { WishesService } from './wishes.service';
 
@@ -37,7 +36,7 @@ export class WishesController {
 
   @UseGuards(JwtGuard)
   @Post()
-  create(@Body() CreateWishDto: CreateWishDto, @Req() req: CustomRequest) {
+  create(@Body() CreateWishDto, @Req() req: CustomRequest) {
     return this.wishesService.create(CreateWishDto, req.user.id);
   }
 

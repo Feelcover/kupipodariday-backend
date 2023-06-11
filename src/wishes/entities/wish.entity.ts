@@ -25,7 +25,7 @@ export class Wish extends MainEntity {
   @IsInt()
   price: number;
 
-  @Column({scale: 2, default: 0 })
+  @Column({ scale: 2, default: 0 })
   @IsInt()
   raised: number;
 

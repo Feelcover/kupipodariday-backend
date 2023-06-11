@@ -93,8 +93,9 @@ export class UsersService {
   }
 
   getByUsername(username: string) {
-    return this.findOne({ where: { username } })
-    .then((user) => plainToClass(User, user, { excludePrefixes: ['password'] }))
+    return this.findOne({ where: { username } }).then((user) =>
+      plainToClass(User, user, { excludePrefixes: ['password'] }),
+    );
   }
 
   getMyWishes(userId: number) {

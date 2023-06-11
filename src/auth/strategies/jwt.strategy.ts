@@ -12,14 +12,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get('secretKey'),
     });
   }
-  
+
   async validate(jwtPayload: { sub: number }) {
     const user = await this.userService.findOne({
       where: { id: jwtPayload.sub },
     });
 
     if (!user) {
-      throw new UnauthorizedException("Пользователь не найден");
+      throw new UnauthorizedException('Пользователь не найден');
     }
 
     return user;
