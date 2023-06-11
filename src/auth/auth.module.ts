@@ -12,14 +12,16 @@ import { LocalStrategy } from "./strategies/local.strategy";
 
 @Module({
     imports:[
-        PassportModule,
         UsersModule,
+        PassportModule,
         HashModule,
         JwtModule.registerAsync({
             useClass: JwtConfig
-        })
+        }),
     ],
     providers:[JwtConfig, AuthService, LocalStrategy, JwtStrategy],
     controllers:[AuthController],
     exports:[AuthService],
 })
+
+export class AuthModule {}
